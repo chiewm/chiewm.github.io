@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="ELK 海量日志平台搭建记录（-）"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="ROBIN">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/../favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://robin.ml/2018/11/20/海量日志平台搭建记录/"/>
+
+
+<meta name="description" content="这几天业务需要，需要搭建一个日志分析平台，找了很多资料，发现 ELK 对海量日志处理非常不错，于是尝试搭建一下。 一、准备工作请注意版本问题：    Centos 7 X64（我的是虚拟机下安装的） Elasticsearch 6.5.0 Logstash Kibana 6.5.0  二、安装如果你的不是 centos 7，这里 有其他系统安装教程 这里我选择本地安装，把安装包下载到本地本地。 对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELK 海量日志平台搭建记录（-）">
+<meta property="og:url" content="https://robin.ml/2018/11/20/海量日志平台搭建记录/index.html">
+<meta property="og:site_name" content="ROBIN">
+<meta property="og:description" content="这几天业务需要，需要搭建一个日志分析平台，找了很多资料，发现 ELK 对海量日志处理非常不错，于是尝试搭建一下。 一、准备工作请注意版本问题：    Centos 7 X64（我的是虚拟机下安装的） Elasticsearch 6.5.0 Logstash Kibana 6.5.0  二、安装如果你的不是 centos 7，这里 有其他系统安装教程 这里我选择本地安装，把安装包下载到本地本地。 对">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://robin.ml/images/elk/kibana.png">
+<meta property="og:updated_time" content="2018-11-19T10:57:13.550Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ELK 海量日志平台搭建记录（-）">
+<meta name="twitter:description" content="这几天业务需要，需要搭建一个日志分析平台，找了很多资料，发现 ELK 对海量日志处理非常不错，于是尝试搭建一下。 一、准备工作请注意版本问题：    Centos 7 X64（我的是虚拟机下安装的） Elasticsearch 6.5.0 Logstash Kibana 6.5.0  二、安装如果你的不是 centos 7，这里 有其他系统安装教程 这里我选择本地安装，把安装包下载到本地本地。 对">
+<meta name="twitter:image" content="https://robin.ml/images/elk/kibana.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> ELK 海量日志平台搭建记录（-） - ROBIN </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">ROBIN</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ELK 海量日志平台搭建记录（-）
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 20 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>这几天业务需要，需要搭建一个日志分析平台，找了很多资料，发现 <a href="https://www.elastic.co/cn/elk-stack" target="_blank" rel="noopener">ELK</a> 对海量日志处理非常不错，于是尝试搭建一下。</p>
+<h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><p>请注意版本问题：  </p>
+<ul>
+<li><a href="https://www.centos.org/download/" target="_blank" rel="noopener">Centos 7 X64</a>（我的是虚拟机下安装的）</li>
+<li><a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">Elasticsearch 6.5.0</a></li>
+<li><a href="https://www.elastic.co/downloads/logstash" target="_blank" rel="noopener">Logstash</a></li>
+<li><a href="https://www.elastic.co/downloads/kibana" target="_blank" rel="noopener">Kibana 6.5.0</a></li>
+</ul>
+<h2 id="二、安装"><a href="#二、安装" class="headerlink" title="二、安装"></a>二、安装</h2><p>如果你的不是 centos 7，<a href="https://www.elastic.co/guide/en/logstash/6.5/installing-logstash.html" target="_blank" rel="noopener">这里</a> 有其他系统安装教程</p>
+<p>这里我选择本地安装，把安装包下载到本地本地。</p>
+<p>对于 centos 7：</p>
+<h3 id="1、Elasticsearch-安装"><a href="#1、Elasticsearch-安装" class="headerlink" title="1、Elasticsearch 安装"></a>1、Elasticsearch 安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rpm -i elasticsearch-6.5.0.rpm</span><br></pre></td></tr></table></figure>
+<p>安装完成后，可以在 <code>/etc/elasticsearch</code> 找到配置文件，在 <code>/usr/share/elasticsearch</code> 找到程序目录，忘记可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ whereis elasticsearch</span><br></pre></td></tr></table></figure>
+<h3 id="2、Logstash-安装"><a href="#2、Logstash-安装" class="headerlink" title="2、Logstash 安装"></a>2、Logstash 安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rpm -i  logstash-6.5.0.rpm</span><br></pre></td></tr></table></figure>
+<p>安装完成后，可以在 <code>/etc/logstash</code> 找到配置文件，在 <code>/usr/share/logstash</code> 找到程序目录，忘记可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ whereis logstash</span><br></pre></td></tr></table></figure>
+<h3 id="3、Kibana-安装"><a href="#3、Kibana-安装" class="headerlink" title="3、Kibana 安装"></a>3、Kibana 安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rpm -i  kibana-6.5.0.rpm</span><br></pre></td></tr></table></figure>
+<p>安装完成后，可以在 <code>/etc/kibana</code> 找到配置文件，在 <code>/usr/share/kibana</code> 找到程序目录，忘记可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ whereis kibana</span><br></pre></td></tr></table></figure>
+<h2 id="三、配置"><a href="#三、配置" class="headerlink" title="三、配置"></a>三、配置</h2><h3 id="1、Elasticsearch-配置"><a href="#1、Elasticsearch-配置" class="headerlink" title="1、Elasticsearch 配置"></a>1、Elasticsearch 配置</h3><p>打开 <code>/etc/elasticsearch/elasticsearch.yml</code> ，主要修改的地方：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: nginx_log  <span class="comment"># 可以自定义</span></span><br><span class="line">node.name: node-1        <span class="comment"># 可以自定义</span></span><br><span class="line">network.host: 0.0.0.0    <span class="comment"># 允许任何 ip 访问</span></span><br></pre></td></tr></table></figure></p>
+<p>如果内存不足会报错，可以修改 <code>/etc/elasticsearch/jvm.options</code>。</p>
+<h3 id="2、Kibana-配置"><a href="#2、Kibana-配置" class="headerlink" title="2、Kibana 配置"></a>2、Kibana 配置</h3><p>打开 <code>/etc/kibana/kibana.yml</code> ，主要修改的地方：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.host: <span class="string">"0.0.0.0"</span>                      <span class="comment"># 允许任何 ip 访问</span></span><br><span class="line">elasticsearch.url: <span class="string">"http://localhost:9200"</span>  <span class="comment"># Elasticsearch 的地址，带端口</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="3、Logstash-配置"><a href="#3、Logstash-配置" class="headerlink" title="3、Logstash 配置"></a>3、Logstash 配置</h3><p>在 <code>/etc/logstash/conf.d</code> 下新建文件，暂且为 <code>test.conf</code> ，把以下内容粘贴进去，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">    file &#123;</span><br><span class="line">        path =&gt; <span class="string">"/var/log/nginx/access_analyse.log"</span>  <span class="comment"># 这个是本地文件，我的是 nginx 产生的日志</span></span><br><span class="line">        codec =&gt; json                                <span class="comment"># 编码为 json</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">output &#123;</span><br><span class="line">    elasticsearch &#123;</span><br><span class="line">        hosts =&gt; <span class="string">"127.0.0.1:9200"</span>                    <span class="comment"># elasticsearch 的地址和端口</span></span><br><span class="line">        index =&gt; <span class="string">"nginx_access_analyse"</span>              <span class="comment"># 索引的名称，可以自定义</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果内存不足会报错，可以修改 <code>/etc/logstash/jvm.options</code>。</p>
+<h2 id="四、启动"><a href="#四、启动" class="headerlink" title="四、启动"></a>四、启动</h2><h3 id="1、Elasticsearch-启动"><a href="#1、Elasticsearch-启动" class="headerlink" title="1、Elasticsearch 启动"></a>1、Elasticsearch 启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart elasticsearch.service  <span class="comment"># 重启</span></span><br><span class="line">$ sudo systemctl status elasticsearch.service   <span class="comment"># 查看状态</span></span><br></pre></td></tr></table></figure>
+<h3 id="2、Logstash-启动"><a href="#2、Logstash-启动" class="headerlink" title="2、Logstash 启动"></a>2、Logstash 启动</h3><p>会花一些时间，要等等。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/test.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、Kibana-启动"><a href="#2、Kibana-启动" class="headerlink" title="2、Kibana 启动"></a>2、Kibana 启动</h3><p>会花一些时间，也要等等。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/share/kibana/bin/kibana</span><br></pre></td></tr></table></figure></p>
+<h2 id="四、查看"><a href="#四、查看" class="headerlink" title="四、查看"></a>四、查看</h2><p>打开 <a href="http:127.0.0.1:5061" target="_blank" rel="noopener">127.0.0.1:5061</a> 查看 Kibana。<br>在这个图可以看到刚刚建立的索引（可能需要等待一定时间才能看到），到这里就算搭建完成了<br><img src="/images/elk/kibana.png" alt="图1"></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">robin.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
