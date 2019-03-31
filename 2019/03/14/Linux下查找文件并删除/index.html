@@ -43,7 +43,7 @@
 <meta property="og:site_name" content="d3adrabbit">
 <meta property="og:description" content="一道面试题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-31T14:09:16.272Z">
+<meta property="og:updated_time" content="2019-03-31T14:47:06.092Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下查找文件并删除">
 <meta name="twitter:description" content="一道面试题">
@@ -142,9 +142,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name -mtime 10   <span class="comment"># 使用 -mtime， 单位为天，+10 表示 10 天以前（不是那一天）， -10 是 10 天内</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查找文件十天前修改的文件并删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find  path  -option  [ -<span class="built_in">print</span> ] [ -<span class="built_in">exec</span>  -ok  <span class="built_in">command</span> ] &#123;&#125; \  <span class="comment"># 格式,&#123;&#125; 代表查找出来的内容</span></span><br></pre></td></tr></table></figure>
-<p> 例如：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find  / -name * -<span class="built_in">exec</span> rm -rf &#123;&#125; \   <span class="comment">#</span></span><br></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find  path  -option  [ -<span class="built_in">print</span> ] [ -<span class="built_in">exec</span>  -ok  <span class="built_in">command</span> ] &#123;&#125; \  <span class="comment"># 格式,&#123;&#125; 代表查找出来的内容</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line">find  / -name * -<span class="built_in">exec</span> rm -rf &#123;&#125; \   <span class="comment">#</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 
             </div>
