@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="Django 遇到的问题"/>
+
+
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="d3adrabbit">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/../favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://robin.ml/2018/08/13/Django遇到的问题/"/>
+
+
+<meta name="description" content="记录一下学习 Django 2.13 的过程中遇到的问题">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django 遇到的问题">
+<meta property="og:url" content="https://robin.ml/2018/08/13/Django遇到的问题/index.html">
+<meta property="og:site_name" content="d3adrabbit">
+<meta property="og:description" content="记录一下学习 Django 2.13 的过程中遇到的问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-31T09:40:27.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django 遇到的问题">
+<meta name="twitter:description" content="记录一下学习 Django 2.13 的过程中遇到的问题">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Django 遇到的问题 - d3adrabbit </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">d3adrabbit</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Django 遇到的问题
+        
+      </h1>
+
+      <time class="post-time">
+          8月 13 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>记录一下学习 Django 2.13 的过程中遇到的问题<br><a id="more"></a></p>
+<ol>
+<li><p>celery 4.2.1 在 Windows10 下要安装 eventlet</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A &quot;ProjectName&quot; worker -l info -P eventlet</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义user改名字，不然会出现建不了外键</p>
+</li>
+<li><p>authenticate() 方法使用前提：  </p>
+</li>
+</ol>
+<ul>
+<li>创建用户使用 create_user()   </li>
+<li>is_activive 为 True，在 settings.py 添加解决<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AUTHENTICATION_BACKENDS = (&apos;django.contrib.auth.backends.AllowAllUsersModelBackend&apos;,)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>继续更新…</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Python/">Python</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/20/海量日志平台搭建记录/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ELK 海量日志平台搭建记录（-）</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/07/21/1.10回归问题/">
+        <span class="next-text nav-default">1.10 回归问题</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2018 -
+    
+    2019
+    <span class="footer-author"><a href="/">d3adrabbit</a>.</span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+  </body>
+</html>

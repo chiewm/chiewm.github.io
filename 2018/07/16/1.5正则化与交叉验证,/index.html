@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="1.5 正则化与交叉验证"/>
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="d3adrabbit">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/../favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://robin.ml/2018/07/16/1.5正则化与交叉验证,/"/>
+
+
+<meta name="description" content="正则化与交叉验证1.5.1 正则化模型选择的典型方法是正则化（regularization）。结构风险最小化（structural risk minimization， SRM），等价于正则化（regularization）。结构风险在经验风险上加上表示模型复杂度的正则化项（regularizer）或罚项（penalty term）。  \min_{f \in \digamma} \frac {1">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.5 正则化与交叉验证">
+<meta property="og:url" content="https://robin.ml/2018/07/16/1.5正则化与交叉验证,/index.html">
+<meta property="og:site_name" content="d3adrabbit">
+<meta property="og:description" content="正则化与交叉验证1.5.1 正则化模型选择的典型方法是正则化（regularization）。结构风险最小化（structural risk minimization， SRM），等价于正则化（regularization）。结构风险在经验风险上加上表示模型复杂度的正则化项（regularizer）或罚项（penalty term）。  \min_{f \in \digamma} \frac {1">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-31T09:30:16.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.5 正则化与交叉验证">
+<meta name="twitter:description" content="正则化与交叉验证1.5.1 正则化模型选择的典型方法是正则化（regularization）。结构风险最小化（structural risk minimization， SRM），等价于正则化（regularization）。结构风险在经验风险上加上表示模型复杂度的正则化项（regularizer）或罚项（penalty term）。  \min_{f \in \digamma} \frac {1">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 1.5 正则化与交叉验证 - d3adrabbit </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">d3adrabbit</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          1.5 正则化与交叉验证
+        
+      </h1>
+
+      <time class="post-time">
+          7月 16 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="正则化与交叉验证"><a href="#正则化与交叉验证" class="headerlink" title="正则化与交叉验证"></a>正则化与交叉验证</h1><h2 id="1-5-1-正则化"><a href="#1-5-1-正则化" class="headerlink" title="1.5.1 正则化"></a>1.5.1 正则化</h2><p>模型选择的典型方法是正则化（regularization）。<br>结构风险最小化（structural risk minimization， SRM），等价于正则化（regularization）。结构风险在经验风险上加上表示模型复杂度的正则化项（regularizer）或罚项（penalty term）。</p>
+<script type="math/tex; mode=display">
+\min_{f \in \digamma} \frac {1} {N} \sum ^N _{i=1} L (y_i, f(x_i)) + \lambda J (f)</script><p>其中 $J(f)$ 为模型的复杂度，是定义在假设空间的 $\digamma$ 上的泛函。模型 $f$ 越复杂，复杂度 $J(f)$ 就越大，复杂度表示对复杂模型的惩罚。$\lambda \geqslant 0$ 是系数，用以权衡经验风险和模型复杂度，结构风险小需要经验风险与模型复杂度同时小。</p>
+<p>正则化可以选不同的的形式，例如在回归问题中，损失函数是平方损失，正则化项可以是参数向量的 $L_2$ 范数：</p>
+<script type="math/tex; mode=display">
+L(w) = \frac {1} {N} \sum ^N _{i=1}(f(x_i; w) - y_i) ^2 + \frac {\lambda} {2} {||w||} ^2</script><p>${||w||}$ 表示参数向量的 $w$ 的 $L_2$ 范数。</p>
+<p>或：</p>
+<script type="math/tex; mode=display">
+L(w) = \frac {1} {N} \sum ^N _{i=1}(f(x_i; w) - y_i) ^2 + \frac {\lambda} {2} {||w||} _1</script><p>${||w||}_1$ 表示参数向量的 $w$ 的 $L_1$ 范数。</p>
+<p>正则化的作用是选择经验风险与模型复杂度同时小的模型。</p>
+<p>正则化符合奥卡姆剃刀原理（Ocacam’s razor）。</p>
+<h2 id="1-5-2-交叉验证"><a href="#1-5-2-交叉验证" class="headerlink" title="1.5.2 交叉验证"></a>1.5.2 交叉验证</h2><p>如果给定的样本数据充足，进行模型选择的一种简单方法是随机地将数据集切成三份，分为训练集（training set），验证集（validation set）和测试集（test set）。<br>验证集用于模型的选择。</p>
+<p>数据不充足时，采用交叉验证。<br>交叉验证的基本思想是重复地使用数据。</p>
+<ol>
+<li><p>简单交叉验证<br>将数据随机分成两份，一部分作为训练集，另一部分作为测试集（例70% 训练集，30% 测试集）；然后用训练集在各种条件下（如不同参数的个数）训练模型，从而获得不同的模型；在测试集上评估各个模型的测试误差，选出测试误差最小的模型。</p>
+</li>
+<li><p>S 折交叉验证（S-fold cross validation）<br>随机将数据切分成 S 个互不相关的大小相同的子集；然后利用 S-1 个子集的数据训练模型，利用剩下的子集测试模型；将这一过程对可能的 S 种选择重复进行，最后选出 S 次评测中平均测试误差最小的模型。</p>
+</li>
+<li><p>留一交叉验证（leave-one-out cross validation）<br>S 折交叉验证的特殊情形时 S = N ， 往往在数据缺乏的情况下使用，N 时给定数据集的容量。</p>
+</li>
+</ol>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    menuSettings: {
+      zoom: "None"
+    },
+    showMathMenu: false,
+    jax: ["input/TeX","output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js"],
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [["\\(", "\\)"]],
+      displayMath: [["\\[", "\\]"]]
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/07/17/1.6泛化能力/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">1.6 泛化能力</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/07/15/1.4模型评估与模型选择/">
+        <span class="next-text nav-default">1.4 模型评估与模型选择</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2018 -
+    
+    2019
+    <span class="footer-author"><a href="/">d3adrabbit</a>.</span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

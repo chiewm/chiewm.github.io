@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="1.7 生成模型与判别模型"/>
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="d3adrabbit">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/../favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://robin.ml/2018/07/18/1.7生成模型的与判别模型/"/>
+
+
+<meta name="description" content="1.7 生成模型与判别模型监督学习可分为生成方法（generative approach）和判别方法（discriminative approach），所学到的模型分为生成模型（generative model）和判别模型（discrimination model）。 生成模型由数据学习模型联合概率分布 $P(X, Y)$ , 然后求出条件概率分布 $P(X \mid Y)$作为预测的模型的，给定">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.7 生成模型与判别模型">
+<meta property="og:url" content="https://robin.ml/2018/07/18/1.7生成模型的与判别模型/index.html">
+<meta property="og:site_name" content="d3adrabbit">
+<meta property="og:description" content="1.7 生成模型与判别模型监督学习可分为生成方法（generative approach）和判别方法（discriminative approach），所学到的模型分为生成模型（generative model）和判别模型（discrimination model）。 生成模型由数据学习模型联合概率分布 $P(X, Y)$ , 然后求出条件概率分布 $P(X \mid Y)$作为预测的模型的，给定">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-31T09:28:47.554Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.7 生成模型与判别模型">
+<meta name="twitter:description" content="1.7 生成模型与判别模型监督学习可分为生成方法（generative approach）和判别方法（discriminative approach），所学到的模型分为生成模型（generative model）和判别模型（discrimination model）。 生成模型由数据学习模型联合概率分布 $P(X, Y)$ , 然后求出条件概率分布 $P(X \mid Y)$作为预测的模型的，给定">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 1.7 生成模型与判别模型 - d3adrabbit </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">d3adrabbit</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          1.7 生成模型与判别模型
+        
+      </h1>
+
+      <time class="post-time">
+          7月 18 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="1-7-生成模型与判别模型"><a href="#1-7-生成模型与判别模型" class="headerlink" title="1.7 生成模型与判别模型"></a>1.7 生成模型与判别模型</h1><p>监督学习可分为生成方法（generative approach）和判别方法（discriminative approach），<br>所学到的模型分为生成模型（generative model）和判别模型（discrimination model）。</p>
+<p>生成模型由数据学习模型联合概率分布 $P(X, Y)$ , 然后求出条件概率分布 $P(X \mid Y)$作为预测的模型的，给定输入 $X$ 产生输出 $Y$ 的生成关系</p>
+<script type="math/tex; mode=display">
+P(X \mid Y) = \frac {P(X,Y)} {P(X)}</script><p>典型的生成模型还有：朴素贝叶斯和隐马尔科夫模型。</p>
+<hr>
+<p>判别方法由数据直接学习决策函数 $f(X)$ 或者条件概率分布 $P(X \mid Y)$ 作为预测模型，即判别模型。<br>判别模型关心的时给定输入的输入 $X$，应该预测什么样的输入 $Y$。<br>典型的判别模型有：k 近邻法、感知机、决策树、逻辑斯蒂回归、最大熵模型、支持向量机、提升方法和条件随机场。</p>
+<hr>
+<p>生成方法的特点：生成方法可以还原出联合概率分布 $P(X, Y)$,而判别方法不行；生成方法的学习收敛速度更快，即当样本容量增加时，学到的模型可以更快收敛于真实模型；当存在隐变量时，仍可以用，而判别方法不行。  </p>
+<p>判别方法的特点：直接学习的是条件概率 $P(X \mid Y)$ 或决策函数 $f(X)$，直接面对预测，往往学习的准确率更高，由于直接学习，可以直接对数据进行各种程度上抽象、定义特征并使用特征，因此可以简化学习问题。</p>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    menuSettings: {
+      zoom: "None"
+    },
+    showMathMenu: false,
+    jax: ["input/TeX","output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js"],
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [["\\(", "\\)"]],
+      displayMath: [["\\[", "\\]"]]
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/07/19/1.8分类问题/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">1.8 分类问题</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/07/17/1.6泛化能力/">
+        <span class="next-text nav-default">1.6 泛化能力</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2018 -
+    
+    2019
+    <span class="footer-author"><a href="/">d3adrabbit</a>.</span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="1.9 标注问题"/>
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="d3adrabbit">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/../favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://robin.ml/2018/07/20/1.9标注问题/"/>
+
+
+<meta name="description" content="1.9 标注问题标注（tagging）也是监督学习问题，可以认为是分类问题推广，又是更复杂的结构预测（structure prediction）问题的简单形式。标注问题输入的是一个观测序列，输出的是一个标记序列或状态序列。给定一个训练数据集  T = \{(x_1, y_1), (x_2, y_2), ...,(x_{_N}, y_{_N})\}$x_i = (x_i ^{(1)},x_i ^{(">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.9 标注问题">
+<meta property="og:url" content="https://robin.ml/2018/07/20/1.9标注问题/index.html">
+<meta property="og:site_name" content="d3adrabbit">
+<meta property="og:description" content="1.9 标注问题标注（tagging）也是监督学习问题，可以认为是分类问题推广，又是更复杂的结构预测（structure prediction）问题的简单形式。标注问题输入的是一个观测序列，输出的是一个标记序列或状态序列。给定一个训练数据集  T = \{(x_1, y_1), (x_2, y_2), ...,(x_{_N}, y_{_N})\}$x_i = (x_i ^{(1)},x_i ^{(">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-31T09:30:40.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.9 标注问题">
+<meta name="twitter:description" content="1.9 标注问题标注（tagging）也是监督学习问题，可以认为是分类问题推广，又是更复杂的结构预测（structure prediction）问题的简单形式。标注问题输入的是一个观测序列，输出的是一个标记序列或状态序列。给定一个训练数据集  T = \{(x_1, y_1), (x_2, y_2), ...,(x_{_N}, y_{_N})\}$x_i = (x_i ^{(1)},x_i ^{(">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 1.9 标注问题 - d3adrabbit </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">d3adrabbit</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          1.9 标注问题
+        
+      </h1>
+
+      <time class="post-time">
+          7月 20 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="1-9-标注问题"><a href="#1-9-标注问题" class="headerlink" title="1.9 标注问题"></a>1.9 标注问题</h1><p>标注（tagging）也是监督学习问题，可以认为是分类问题推广，又是更复杂的结构预测（structure prediction）问题的简单形式。<br>标注问题输入的是一个观测序列，输出的是一个标记序列或状态序列。<br>给定一个训练数据集</p>
+<script type="math/tex; mode=display">
+T = \{(x_1, y_1), (x_2, y_2), ...,(x_{_N}, y_{_N})\}</script><p>$x_i = (x_i ^{(1)},x_i ^{(2)},…,x_i ^{(n)}),i=1,2,…,N$ 是输入观测序列，$y_i = (y_i ^{(1)},y_i ^{(2)},…,y_i ^{(n)}),i=1,2,…,N$ 是输出标记序列，$n$ 是序列的长度，对不同原本可以有不同的值，学习系统基于训练数据集构建一个模型，表示为条件概率分布：</p>
+<script type="math/tex; mode=display">
+P(Y^{(1)},Y^{(2)},...,Y^{(n)} \mid X^{(1)},X^{(2)},...,X^{(n)})</script><p>每一个 $X^{(i)}(1, 2,…,n)$ 取值为所有可能的观测，每一个 $Y^{(i)}(1, 2,…,n)$ 为所有可能的标记，一般 ${n&lt;&lt;N}$.</p>
+<p>标记系统按照学习得到的体哦啊见概率分布模型，对新的输入观测序列找到相应的输出标记序列。</p>
+<p>具体地：<br>对一个观测序列 $x<em>{_N+1}=(x^{(1)}</em>{<em>{N+1}},x^{(2)}</em>{<em>{N+2}},…,x^{(N)}</em>{<em>{N+1}})^T$ 找到是条件概率 $P(y</em>{<em>N+1} \mid x</em>{<em>N+1})$ 最大的标记序列 $y</em>{<em>N+1}=(y^{(1)}</em>{<em>{N+1}},y^{(2)}</em>{<em>{N+2}},…,y^{(N)}</em>{_{N+1}})^T$</p>
+<p>评价指标：和分类指标一样。</p>
+<p>常用的统计学习方法：隐马尔科夫模型，条件随机场。</p>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    menuSettings: {
+      zoom: "None"
+    },
+    showMathMenu: false,
+    jax: ["input/TeX","output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js"],
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [["\\(", "\\)"]],
+      displayMath: [["\\[", "\\]"]]
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/07/21/1.10回归问题/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">1.10 回归问题</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/07/19/1.8分类问题/">
+        <span class="next-text nav-default">1.8 分类问题</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2018 -
+    
+    2019
+    <span class="footer-author"><a href="/">d3adrabbit</a>.</span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

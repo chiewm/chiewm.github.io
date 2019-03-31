@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="1.8 分类问题"/>
+
+
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="d3adrabbit">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/../favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://robin.ml/2018/07/19/1.8分类问题/"/>
+
+
+<meta name="description" content="1.8 分类问题当输出变量 $Y$ 取有限个离散值时，预测问题就成为分类问题。监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier），分类器对新的输入进行输出的预测（prediction），称为分类（classification），可能的输出称为类（class），分类的类别为多个的时候，称为多类分类问题。 评价分类器性能的指标一般是分类准确率（accuracy），其定义">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.8 分类问题">
+<meta property="og:url" content="https://robin.ml/2018/07/19/1.8分类问题/index.html">
+<meta property="og:site_name" content="d3adrabbit">
+<meta property="og:description" content="1.8 分类问题当输出变量 $Y$ 取有限个离散值时，预测问题就成为分类问题。监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier），分类器对新的输入进行输出的预测（prediction），称为分类（classification），可能的输出称为类（class），分类的类别为多个的时候，称为多类分类问题。 评价分类器性能的指标一般是分类准确率（accuracy），其定义">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-31T09:30:33.170Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.8 分类问题">
+<meta name="twitter:description" content="1.8 分类问题当输出变量 $Y$ 取有限个离散值时，预测问题就成为分类问题。监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier），分类器对新的输入进行输出的预测（prediction），称为分类（classification），可能的输出称为类（class），分类的类别为多个的时候，称为多类分类问题。 评价分类器性能的指标一般是分类准确率（accuracy），其定义">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 1.8 分类问题 - d3adrabbit </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">d3adrabbit</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          1.8 分类问题
+        
+      </h1>
+
+      <time class="post-time">
+          7月 19 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="1-8-分类问题"><a href="#1-8-分类问题" class="headerlink" title="1.8 分类问题"></a>1.8 分类问题</h1><p>当输出变量 $Y$ 取有限个离散值时，预测问题就成为分类问题。<br>监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier），分类器对新的输入进行输出的预测（prediction），称为分类（classification），可能的输出称为类（class），分类的类别为多个的时候，称为多类分类问题。</p>
+<p>评价分类器性能的指标一般是分类准确率（accuracy），其定义是：对于给定的测试数据集，分类器正确分类的样本数与总样本数之比。也就是损失函数是 0-1 损失时测试数据集上的准确率。</p>
+<p>对于二分类的问题常用的评价指标是精确率（precision）与召回率（recall）。<br>有义下四种情况</p>
+<ul>
+<li>TP —— 将正类预测为正类数</li>
+<li>FN —— 将正类预测为负类数</li>
+<li>FP —— 将负类预测为正类数</li>
+<li>TN —— 将负类预测为负类数</li>
+</ul>
+<p>精确率定义为：</p>
+<script type="math/tex; mode=display">
+P = \frac {TP} {TP + FP}</script><p>召回率定义为：</p>
+<script type="math/tex; mode=display">
+R = \frac {TP} {TP + FN}</script><p>$F_1$ 值，是精确率和召回率的调和均值：</p>
+<script type="math/tex; mode=display">
+\frac {2} {F_1} = \frac {1} {P} + \frac {1} {R}</script><script type="math/tex; mode=display">
+F1 = \frac {2TP} {2TP+FP+FN}</script><p>精确率和召回率都高时，$F_1$也会高。</p>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    menuSettings: {
+      zoom: "None"
+    },
+    showMathMenu: false,
+    jax: ["input/TeX","output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js"],
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [["\\(", "\\)"]],
+      displayMath: [["\\[", "\\]"]]
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/07/20/1.9标注问题/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">1.9 标注问题</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/07/18/1.7生成模型的与判别模型/">
+        <span class="next-text nav-default">1.7 生成模型与判别模型</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2018 -
+    
+    2019
+    <span class="footer-author"><a href="/">d3adrabbit</a>.</span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
